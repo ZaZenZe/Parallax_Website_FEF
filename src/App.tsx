@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'motion/react';
+import Header from './components/Header.tsx';
+import Hero from './components/Hero.tsx';
+import About from './components/About.tsx';
+import Works from './components/Works.tsx';
+import Gallery from './components/Gallery.tsx';
+import Footer from './components/Footer.tsx';
+import LoadingScreen from './components/LoadingScreen.tsx';
+import './App.scss';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setIsLoading(false), 4000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const handleLoadingComplete = () => setIsLoading(false);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="app">
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
+        )}
+      </AnimatePresence>
 
-export default App
+      {!isLoading && (
+        <>
+          <Header />
+          <main className="app__main">
+            <Hero />
+            <About />
+            <Works />
+            <Gallery />
+          </main>
+          <Footer />
+        </>
+      )}
+    </div>
+  );
+};
+
+export default App;

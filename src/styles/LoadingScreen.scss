@@ -1,0 +1,75 @@
+.loading {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: radial-gradient(circle at center, rgba(241, 34, 249, 0.2), #0b0b0b 65%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.loading__content {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.loading__counter {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.6rem;
+  font-family: 'Oswald', sans-serif;
+}
+
+.loading__number {
+  font-size: clamp(6rem, 12vw, 12rem);
+  font-weight: 700;
+  color: #f122f9;
+}
+
+.loading__percent {
+  font-size: clamp(3rem, 5vw, 5rem);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.loading__bar {
+  margin: 3rem auto 2rem;
+  width: clamp(20rem, 50vw, 40rem);
+  height: 0.6rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.6rem;
+  overflow: hidden;
+}
+
+.loading__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f122f9 0%, #df19e7 50%, #15fc08 100%);
+  border-radius: 0.6rem;
+}
+
+.loading__tagline {
+  font-size: 1.6rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.loading__particles {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8rem;
+  opacity: 0.7;
+}
+
+.loading__particle {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f122f9 0%, #df19e7 100%);
+}

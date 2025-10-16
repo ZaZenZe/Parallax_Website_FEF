@@ -1,0 +1,123 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 2rem 4rem;
+  backdrop-filter: blur(12px);
+  background: rgba(11, 11, 11, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  @media (max-width: 767px) {
+    padding: 1.6rem 2.4rem;
+  }
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 140rem;
+  margin: 0 auto;
+}
+
+.header__logo {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.4rem;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.header__nav {
+  display: flex;
+
+  @media (max-width: 1024px) {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 11, 11, 0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+}
+
+.header__nav--open {
+  @media (max-width: 1024px) {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.header__menu {
+  display: flex;
+  gap: 3rem;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 2.4rem;
+  }
+}
+
+.header__menu-item a {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: color 0.3s ease;
+}
+
+.header__menu-item a:hover {
+  color: #f122f9;
+}
+
+.header__menu-index {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.header__menu-label {
+  font-size: 1.4rem;
+}
+
+.header__burger {
+  display: none;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  span {
+    width: 3rem;
+    height: 0.3rem;
+    background: #ffffff;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    border-radius: 0.3rem;
+  }
+
+  @media (max-width: 1024px) {
+    display: flex;
+  }
+}
+
+.header__burger--active span:nth-child(1) {
+  transform: translateY(0.9rem) rotate(45deg);
+}
+
+.header__burger--active span:nth-child(2) {
+  opacity: 0;
+}
+
+.header__burger--active span:nth-child(3) {
+  transform: translateY(-0.9rem) rotate(-45deg);
+}

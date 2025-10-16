@@ -1,0 +1,101 @@
+.about {
+  position: relative;
+  padding: 16rem 4rem;
+  background: #0b0b0b;
+
+  @media (max-width: 767px) {
+    padding: 12rem 2rem;
+  }
+}
+
+.about__container {
+  max-width: 120rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8rem;
+  align-items: center;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 6rem;
+  }
+}
+
+.about__media {
+  position: relative;
+  min-height: 40rem;
+}
+
+.about__shape {
+  position: absolute;
+  filter: drop-shadow(0 2rem 4rem rgba(241, 34, 249, 0.2));
+}
+
+.about__shape--primary {
+  top: 0;
+  left: 10%;
+  width: clamp(20rem, 25vw, 32rem);
+}
+
+.about__shape--secondary {
+  bottom: 10%;
+  right: 0;
+  width: clamp(18rem, 22vw, 28rem);
+}
+
+.about__shape--accent {
+  top: 30%;
+  right: 40%;
+  width: clamp(16rem, 18vw, 24rem);
+}
+
+.about__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8rem;
+}
+
+.about__eyebrow {
+  font-size: 1.2rem;
+  letter-spacing: 0.6rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.about__title {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(4rem, 6vw, 6.2rem);
+  line-height: 1.1;
+}
+
+.about__description {
+  font-size: 1.6rem;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.about__stats {
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.about__stat-value {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(4rem, 5vw, 5.4rem);
+  color: #f122f9;
+}
+
+.about__stat-label {
+  font-size: 1.2rem;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
