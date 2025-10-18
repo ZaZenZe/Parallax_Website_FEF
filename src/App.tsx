@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Contact from './components/Contact';
 import LoadingScreen from './components/LoadingScreen';
+import ParallaxBackground from './components/ParallaxBackground';
 import './App.scss';
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
 
       {!isLoading && (
         <>
+          <ParallaxBackground />
           <Hero />
           <main className="app__main">
             <About />

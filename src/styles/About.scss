@@ -1,8 +1,9 @@
 .about {
   position: relative;
   padding: 8rem 2rem 6rem;
-  background: linear-gradient(175deg, #0a0e1a 0%, #14192d 50%, #0f1524 100%);
+  background: transparent;
   overflow: hidden;
+  z-index: 1;
 
   &::before {
     content: '';
@@ -13,12 +14,29 @@
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(0, 212, 212, 0.3), transparent);
   }
+
+  // Add a subtle overlay for text readability
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg, 
+      rgba(10, 14, 26, 0.5) 0%, 
+      rgba(10, 14, 26, 0.7) 50%,
+      rgba(10, 14, 26, 0.5) 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 .about__intro {
+  position: relative;
   max-width: 800px;
   margin: 0 auto 5rem;
   text-align: center;
+  z-index: 1;
 }
 
 .about__eyebrow {
@@ -57,11 +75,13 @@
 }
 
 .about__grid {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto 4rem;
+  z-index: 1;
 }
 
 .about__card {

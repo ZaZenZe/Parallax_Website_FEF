@@ -16,8 +16,6 @@ const navLinks = [
 const Hero = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const { x, y } = useMouseParallax(28);
-  const slowX = useTransform(x, (value) => value * 0.35);
-  const slowY = useTransform(y, (value) => value * 0.35);
   const midX = useTransform(x, (value) => value * 0.65);
   const midY = useTransform(y, (value) => value * 0.65);
   const reverseX = useTransform(x, (value) => value * -0.35);
@@ -31,7 +29,6 @@ const Hero = () => {
   const filmOverlayRef = useRef<HTMLDivElement>(null);
   const fixedLogoRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
 
   // Cinematic intro animation
   useEffect(() => {
@@ -82,7 +79,7 @@ const Hero = () => {
 
   // Scroll parallax after intro
   useEffect(() => {
-    if (!introComplete || !fixedLogoRef.current || !contentRef.current || !backgroundRef.current) return;
+    if (!introComplete || !fixedLogoRef.current || !contentRef.current) return;
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -106,12 +103,6 @@ const Hero = () => {
         y: 100,
         ease: 'power2.in',
       }, 0);
-
-      tl.to(backgroundRef.current, {
-        scale: 1.1,
-        opacity: 0.6,
-        ease: 'power1.out',
-      }, 0);
     }, heroRef);
 
     return () => ctx.revert();
@@ -125,31 +116,6 @@ const Hero = () => {
           <h1 className="hero__film-title">初音ミク</h1>
           <p className="hero__film-subtitle">Hatsune Miku</p>
         </div>
-      </div>
-
-      {/* Background layers */}
-      <div className="hero__background" ref={backgroundRef}>
-        <motion.img
-          src="/layers/Hero_BG.jpeg"
-          alt="Nebula texture backdrop"
-          className="hero__layer hero__layer--base"
-          style={{ x: slowX, y: slowY }}
-          aria-hidden="true"
-        />
-        <motion.img
-          src="/layers/Hero_BG(3).jpeg"
-          alt="Soft gradient cloud"
-          className="hero__layer hero__layer--mid"
-          style={{ x: midX, y: midY }}
-          aria-hidden="true"
-        />
-        <motion.img
-          src="/layers/Hero_BG(5).jpeg"
-          alt="Bloom highlight"
-          className="hero__layer hero__layer--glow"
-          style={{ x: reverseX, y: reverseY }}
-          aria-hidden="true"
-        />
       </div>
 
       {/* Fixed logo (top-left after intro) */}
