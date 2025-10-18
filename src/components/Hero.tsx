@@ -1,35 +1,31 @@
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion } from 'motion/react';
 import { useRef } from 'react';
 import '../styles/Hero.scss';
+import { useSectionParallax } from '../hooks/useSectionParallax';
+import useMouseParallax from '../hooks/useMouseParallax';
+import useFontCycle from '../hooks/useFontCycle';
 
-const heroWords = 'CREATIVE'.split('');
-const heroOutlineWords = 'STUDIO'.split('');
+const heroWords = 'PARALLAX'.split('');
+const heroOutlineWords = 'WEBSITE'.split('');
 
 const Hero = () => {
   const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const translateY = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
-  const fadeOut = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
-  const shapeDrift = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
-  const mediaLeftY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const mediaRightY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  const { bgDrift, midDrift, foreDrift, reverseDrift, fade } = useSectionParallax(heroRef);
+  const mouse = useMouseParallax(40);
+  const funkyFont = useFontCycle({ intervalMs: 500 });
 
   return (
     <section className="hero" id="hero" ref={heroRef}>
-      <motion.div className="hero__background" style={{ opacity: fadeOut }} />
+      <motion.div className="hero__background" style={{ opacity: fade }} />
 
-      <motion.div className="hero__shapes" style={{ y: shapeDrift }}>
+  <motion.div className="hero__shapes" style={{ y: bgDrift }}>
         <img src="/assets/hero/abstract-shape.png" alt="Abstract shard" className="hero__shape hero__shape--a" />
         <img src="/assets/hero/geometric-shapes.png" alt="Geometric pattern" className="hero__shape hero__shape--b" />
         <img src="/assets/hero/cube-abstract-shape.png" alt="Cube" className="hero__shape hero__shape--c" />
         <img src="/assets/hero/spiral.png" alt="Spiral" className="hero__shape hero__shape--d" />
       </motion.div>
 
-      <motion.div className="hero__content" style={{ y: translateY, opacity: fadeOut }}>
+      <motion.div className="hero__content" style={{ y: midDrift, opacity: fade }}>
         <div className="hero__heading">
           <motion.h1
             className="hero__title"
@@ -37,7 +33,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.17, 0.67, 0.12, 0.82] }}
           >
-            <span className="hero__word">
+            <span className="hero__word" style={{ fontFamily: funkyFont }}>
               {heroWords.map((letter, index) => (
                 <motion.span
                   key={letter + index}
@@ -51,7 +47,7 @@ const Hero = () => {
               ))}
             </span>
 
-            <span className="hero__word hero__word--outline">
+            <span className="hero__word hero__word--outline" style={{ fontFamily: funkyFont }}>
               {heroOutlineWords.map((letter, index) => (
                 <motion.span
                   key={letter + index}
@@ -76,27 +72,35 @@ const Hero = () => {
           </motion.p>
         </div>
 
-        <div className="hero__media">
-          <motion.img
-            src="/assets/hero/works_3d_model_01.png"
-            alt="Floating sculpture"
-            className="hero__media-item hero__media-item--left"
-            initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
-            animate={{ opacity: 0.75, scale: 1, rotate: 360 }}
-            transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
-            style={{ y: mediaLeftY }}
-          />
-          <motion.img
-            src="/assets/hero/works_3d_model_02.png"
-            alt="Floating sculpture"
-            className="hero__media-item hero__media-item--right"
-            initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
-            animate={{ opacity: 0.75, scale: 1, rotate: -360 }}
-            transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
-            style={{ y: mediaRightY }}
-          />
-        </div>
+        {/* Media is now absolutely positioned floats to avoid overlapping the headline */}
       </motion.div>
+
+      {/* Main 3D models (pop-in + parallax) */}
+      <motion.img
+        src="/assets/hero/works_3d_model_01.png"
+        alt="model left"
+        className="hero__float hero__float--model1"
+        initial={{ opacity: 0, scale: 0.8, y: 40 }}
+        whileInView={{ opacity: 0.9, scale: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        style={{ y: foreDrift, x: mouse.x }}
+      />
+      <motion.img
+        src="/assets/hero/works_3d_model_02.png"
+        alt="model right"
+        className="hero__float hero__float--model2"
+        initial={{ opacity: 0, scale: 0.8, y: 40 }}
+        whileInView={{ opacity: 0.9, scale: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
+        style={{ y: reverseDrift, x: mouse.x }}
+      />
+
+      {/* Minimal supporting floaters (non-overlapping) */}
+      <motion.img src="/assets/hero/world.png" alt="world" className="hero__float hero__float--world" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 0.9, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ y: bgDrift, x: mouse.x }} />
+      <motion.img src="/assets/hero/heart.png" alt="heart" className="hero__float hero__float--heart" initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 0.9, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }} style={{ y: midDrift, x: mouse.x }} />
+      <motion.img src="/assets/hero/video-streaming.png" alt="stream" className="hero__float hero__float--stream" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 0.9, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }} style={{ y: reverseDrift, x: mouse.x }} />
 
       <motion.div
         className="hero__scroll"
