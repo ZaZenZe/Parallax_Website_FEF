@@ -1,7 +1,7 @@
 .footer {
   position: relative;
   padding: 0;
-  margin-top: -2rem;
+  margin-top: -8rem;
   background: transparent;
   overflow: hidden;
 }
@@ -14,9 +14,9 @@
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 1rem;
+  gap: 1.4rem;
   text-align: center;
-  padding: 2rem clamp(2.4rem, 8vw, 6rem);
+  padding: 0.5rem clamp(2.4rem, 8vw, 6rem) 3rem;
 }
 
 .footer__credits {
@@ -24,27 +24,27 @@
   border-top: none;
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 1.3rem;
   align-items: center;
   text-align: center;
 }
 
 .footer__credits-text {
-  font-size: 1.15rem;
+  font-size: 1.7rem;
   letter-spacing: 0.05em;
   margin: 0;
   transition: font-family 0.5s ease;
-  opacity: 0.85;
+  opacity: 0.95;
   line-height: 1.6;
 }
 
 .footer__credits-signature {
-  font-size: 1.35rem;
+  font-size: 2rem;
   font-weight: 600;
   letter-spacing: 0.12em;
-  margin-top: 0.5rem;
+  margin-top: 0.7rem;
   transition: font-family 0.5s ease;
-  opacity: 0.95;
+  opacity: 1;
 }
 
 .neon-shift {
@@ -76,15 +76,19 @@
 }
 
 @media (max-width: 600px) {
+  .footer {
+    margin-top: -5rem;
+  }
+
   .footer__inner {
-    padding: 1.5rem clamp(1.6rem, 6vw, 4rem);
+    padding: 0.3rem clamp(1.6rem, 6vw, 4rem) 2rem;
   }
 
   .footer__credits-text {
-    font-size: 1rem;
+    font-size: 1.45rem;
   }
 
   .footer__credits-signature {
-    font-size: 1.15rem;
+    font-size: 1.7rem;
   }
 }
