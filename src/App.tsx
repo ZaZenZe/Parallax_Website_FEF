@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'motion/react';
 import Hero from './components/Hero';
-import Facts from './components/Facts';
-import Spotlight from './components/Spotlight';
-import Gallery from './components/Gallery';
-import Footer from './components/Footer';
+import About from './components/About';
+import Contact from './components/Contact';
 import LoadingScreen from './components/LoadingScreen';
 import './App.scss';
 
@@ -28,11 +26,9 @@ const App = () => {
         <>
           <Hero />
           <main className="app__main">
-            <Facts />
-            <Spotlight />
-            <Gallery />
+            <About />
+            <Contact />
           </main>
-          <Footer />
         </>
       )}
     </div>
