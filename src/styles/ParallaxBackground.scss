@@ -7,7 +7,9 @@
   height: 100vh;
   z-index: 0;
   overflow: hidden;
-  background: #05070c;
+  background: radial-gradient(circle at 25% 20%, rgba(32, 74, 145, 0.4), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(96, 40, 128, 0.35), transparent 50%),
+    #070a14;
   pointer-events: none;
 }
 
@@ -33,7 +35,7 @@
     z-index: 3;
 
     img {
-      filter: brightness(0.45) saturate(0.85) contrast(0.95);
+      filter: brightness(0.82) saturate(1.18) contrast(1.05);
     }
   }
 
@@ -43,7 +45,7 @@
     z-index: 2;
 
     img {
-      filter: brightness(0.5) saturate(0.9) contrast(0.9);
+      filter: brightness(0.75) saturate(1.15) contrast(1.02);
     }
   }
 
@@ -53,7 +55,7 @@
     z-index: 1;
 
     img {
-      filter: brightness(0.5) saturate(0.95) contrast(0.92);
+      filter: brightness(0.78) saturate(1.12) contrast(1.0);
     }
   }
 }
@@ -63,8 +65,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(4, 6, 12, 0.65) 0%, rgba(4, 6, 12, 0.82) 100%);
+  background: linear-gradient(180deg, rgba(5, 8, 15, 0.55) 0%, rgba(5, 8, 15, 0.78) 60%, rgba(9, 12, 18, 0.82) 100%);
   pointer-events: none;
   z-index: 10;
 }

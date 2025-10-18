@@ -20,12 +20,9 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      180deg, 
-      rgba(10, 14, 26, 0.5) 0%, 
-      rgba(10, 14, 26, 0.7) 50%,
-      rgba(10, 14, 26, 0.5) 100%
-    );
+    background: radial-gradient(circle at 20% 10%, rgba(46, 188, 255, 0.28), transparent 55%),
+      radial-gradient(circle at 80% 90%, rgba(198, 86, 255, 0.24), transparent 60%),
+      linear-gradient(180deg, rgba(9, 14, 28, 0.45) 0%, rgba(9, 14, 28, 0.62) 40%, rgba(9, 14, 28, 0.5) 100%);
     pointer-events: none;
     z-index: 0;
   }
@@ -85,19 +82,19 @@
 }
 
 .about__card {
-  background: rgba(20, 25, 45, 0.6);
-  border: 1.5px solid rgba(0, 212, 212, 0.15);
+  background: linear-gradient(200deg, rgba(18, 24, 44, 0.82), rgba(18, 22, 40, 0.68));
+  border: 1.5px solid rgba(46, 188, 255, 0.2);
   border-radius: 1rem;
   padding: 2rem;
   transition: all 0.4s cubic-bezier(0.17, 0.67, 0.12, 0.92);
 
   &:hover {
     transform: translateY(-8px);
-    border-color: rgba(0, 212, 212, 0.4);
-    background: rgba(20, 25, 45, 0.8);
-    box-shadow: 
-      0 12px 32px rgba(0, 0, 0, 0.4),
-      0 0 24px rgba(0, 212, 212, 0.15);
+    border-color: rgba(46, 188, 255, 0.45);
+    background: linear-gradient(200deg, rgba(20, 28, 56, 0.9), rgba(18, 22, 40, 0.82));
+    box-shadow:
+      0 18px 36px rgba(8, 12, 22, 0.5),
+      0 0 28px rgba(46, 188, 255, 0.2);
   }
 }
 

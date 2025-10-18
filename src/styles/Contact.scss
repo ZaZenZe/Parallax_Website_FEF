@@ -13,11 +13,11 @@
 .contact__bg {
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(circle at 30% 40%, rgba(0, 200, 200, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 70% 60%, rgba(200, 0, 255, 0.06) 0%, transparent 50%),
-    rgba(10, 14, 26, 0.6);
-  opacity: 0.8;
+  background:
+    radial-gradient(circle at 25% 30%, rgba(46, 188, 255, 0.24) 0%, transparent 55%),
+    radial-gradient(circle at 75% 70%, rgba(198, 86, 255, 0.22) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(9, 13, 25, 0.6) 0%, rgba(8, 12, 22, 0.74) 70%, rgba(6, 10, 20, 0.8) 100%);
+  opacity: 0.9;
   z-index: 0;
 }
 

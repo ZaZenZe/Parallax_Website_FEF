@@ -4,7 +4,10 @@
   width: 100%;
   overflow-x: hidden;
   color: var(--miku-foreground);
-  background: #0a0a0f;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(46, 188, 255, 0.18), transparent 50%),
+    radial-gradient(circle at 85% 85%, rgba(198, 86, 255, 0.16), transparent 55%),
+    linear-gradient(180deg, #04070f 0%, #050912 40%, #04070f 100%);
 }
 
 .app::before {

@@ -56,7 +56,7 @@ const ParallaxBackground = () => {
           y: 40,
         },
         {
-          opacity: 0.65,
+          opacity: 0.85,
           scale: 1,
           y: 0,
           ease: 'none',
@@ -93,7 +93,7 @@ const ParallaxBackground = () => {
           y: 60,
         },
         {
-          opacity: 0.55,
+          opacity: 0.75,
           scale: 1,
           y: 0,
           ease: 'none',
