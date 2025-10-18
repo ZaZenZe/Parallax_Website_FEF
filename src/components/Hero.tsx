@@ -1,116 +1,110 @@
-import { motion } from 'motion/react';
-import { useRef } from 'react';
-import '../styles/Hero.scss';
-import { useSectionParallax } from '../hooks/useSectionParallax';
+import { motion, useTransform } from 'motion/react';
 import useMouseParallax from '../hooks/useMouseParallax';
-import useFontCycle from '../hooks/useFontCycle';
+import '../styles/Hero.scss';
 
-const heroWords = 'PARALLAX'.split('');
-const heroOutlineWords = 'WEBSITE'.split('');
+const navLinks = [
+  { label: 'Facts', href: '#facts' },
+  { label: 'Spotlight', href: '#spotlight' },
+  { label: 'Gallery', href: '#gallery' },
+];
 
 const Hero = () => {
-  const heroRef = useRef<HTMLElement>(null);
-  const { bgDrift, midDrift, foreDrift, reverseDrift, fade } = useSectionParallax(heroRef);
-  const mouse = useMouseParallax(40);
-  const funkyFont = useFontCycle({ intervalMs: 500 });
+  const { x, y } = useMouseParallax(28);
+  const slowX = useTransform(x, (value) => value * 0.35);
+  const slowY = useTransform(y, (value) => value * 0.35);
+  const midX = useTransform(x, (value) => value * 0.65);
+  const midY = useTransform(y, (value) => value * 0.65);
+  const reverseX = useTransform(x, (value) => value * -0.35);
+  const reverseY = useTransform(y, (value) => value * -0.35);
 
   return (
-    <section className="hero" id="hero" ref={heroRef}>
-      <motion.div className="hero__background" style={{ opacity: fade }} />
+    <section className="hero" id="home">
+      <div className="hero__overlay" aria-hidden="true" />
 
-  <motion.div className="hero__shapes" style={{ y: bgDrift }}>
-        <img src="/assets/hero/abstract-shape.png" alt="Abstract shard" className="hero__shape hero__shape--a" />
-        <img src="/assets/hero/geometric-shapes.png" alt="Geometric pattern" className="hero__shape hero__shape--b" />
-        <img src="/assets/hero/cube-abstract-shape.png" alt="Cube" className="hero__shape hero__shape--c" />
-        <img src="/assets/hero/spiral.png" alt="Spiral" className="hero__shape hero__shape--d" />
-      </motion.div>
-
-      <motion.div className="hero__content" style={{ y: midDrift, opacity: fade }}>
-        <div className="hero__heading">
-          <motion.h1
-            className="hero__title"
-            initial={{ opacity: 0, y: 80 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.17, 0.67, 0.12, 0.82] }}
-          >
-            <span className="hero__word" style={{ fontFamily: funkyFont }}>
-              {heroWords.map((letter, index) => (
-                <motion.span
-                  key={letter + index}
-                  className="hero__letter"
-                  initial={{ opacity: 0, y: 80 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: index * 0.08 }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </span>
-
-            <span className="hero__word hero__word--outline" style={{ fontFamily: funkyFont }}>
-              {heroOutlineWords.map((letter, index) => (
-                <motion.span
-                  key={letter + index}
-                  className="hero__letter hero__letter--outline"
-                  initial={{ opacity: 0, y: 80 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.6 + index * 0.08 }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </span>
-          </motion.h1>
-
-          <motion.p
-            className="hero__subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.6 }}
-          >
-            Immersive digital experiences blending art, design, and technology.
-          </motion.p>
+      <nav className="hero__nav">
+        <div className="hero__logo">
+          <img src="/miku/miku-logo.svg" alt="Stylized Miku logo" />
+          <span>Miku Dayo</span>
         </div>
+        <ul className="hero__menu">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-        {/* Media is now absolutely positioned floats to avoid overlapping the headline */}
-      </motion.div>
-
-      {/* Main 3D models (pop-in + parallax) */}
       <motion.img
-        src="/assets/hero/works_3d_model_01.png"
-        alt="model left"
-        className="hero__float hero__float--model1"
-        initial={{ opacity: 0, scale: 0.8, y: 40 }}
-        whileInView={{ opacity: 0.9, scale: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-        style={{ y: foreDrift, x: mouse.x }}
+        src="/layers/Hero_BG.jpeg"
+        alt="Nebula texture backdrop"
+        className="hero__layer hero__layer--base"
+        style={{ x: slowX, y: slowY }}
+        aria-hidden="true"
       />
       <motion.img
-        src="/assets/hero/works_3d_model_02.png"
-        alt="model right"
-        className="hero__float hero__float--model2"
-        initial={{ opacity: 0, scale: 0.8, y: 40 }}
-        whileInView={{ opacity: 0.9, scale: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.1 }}
-        style={{ y: reverseDrift, x: mouse.x }}
+        src="/layers/Hero_BG(3).jpeg"
+        alt="Soft gradient cloud"
+        className="hero__layer hero__layer--mid"
+        style={{ x: midX, y: midY }}
+        aria-hidden="true"
+      />
+      <motion.img
+        src="/layers/Hero_BG(5).jpeg"
+        alt="Bloom highlight"
+        className="hero__layer hero__layer--glow"
+        style={{ x: reverseX, y: reverseY }}
+        aria-hidden="true"
       />
 
-      {/* Minimal supporting floaters (non-overlapping) */}
-      <motion.img src="/assets/hero/world.png" alt="world" className="hero__float hero__float--world" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 0.9, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ y: bgDrift, x: mouse.x }} />
-      <motion.img src="/assets/hero/heart.png" alt="heart" className="hero__float hero__float--heart" initial={{ opacity: 0, y: -20 }} whileInView={{ opacity: 0.9, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.1 }} style={{ y: midDrift, x: mouse.x }} />
-      <motion.img src="/assets/hero/video-streaming.png" alt="stream" className="hero__float hero__float--stream" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 0.9, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }} style={{ y: reverseDrift, x: mouse.x }} />
+      <div className="hero__content">
+        <motion.div
+          className="hero__intro"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.17, 0.67, 0.12, 0.92] }}
+        >
+          <div className="hero__badge">Digital idol tribute</div>
+          <h1 className="hero__title">
+            <span>Welcome to</span>
+            <strong>Miku Dayo</strong>
+          </h1>
+          <p className="hero__subtitle">
+            A compact parallax playground celebrating Hatsune Miku&apos;s bubbly mascot persona. Glide through neon twilight layers, pick up
+            quick lore, and meet Miku as she peeks into view.
+          </p>
+          <div className="hero__cta">
+            <a href="#facts" className="hero__btn hero__btn--primary">Begin scrolling</a>
+            <a href="#gallery" className="hero__btn hero__btn--ghost">View snapshots</a>
+          </div>
+        </motion.div>
 
-      <motion.div
-        className="hero__scroll"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
-      >
-        <span className="hero__scroll-text">SCROLL</span>
-        <span className="hero__scroll-line" />
-      </motion.div>
+        <motion.img
+          src="/miku/miku-full-art.png"
+          alt="Illustration of Hatsune Miku"
+          className="hero__character"
+          initial={{ opacity: 0, scale: 0.9, y: 40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.8, ease: 'easeOut' }}
+          style={{ x: midX, y: midY }}
+        />
+      </div>
+
+      <motion.img
+        src="/miku/miku-silhouette.png"
+        alt="Silhouetted Miku"
+        className="hero__accent"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 0.55, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+        style={{ x: reverseX, y: reverseY }}
+      />
+
+      <div className="hero__scroll">
+        <div className="hero__scroll-track">
+          <span>scroll down • scroll down • scroll down • scroll down • </span>
+        </div>
+      </div>
     </section>
   );
 };

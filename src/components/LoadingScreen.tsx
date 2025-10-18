@@ -1,95 +1,76 @@
 import { motion } from 'motion/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../styles/LoadingScreen.scss';
 
 type LoadingScreenProps = {
-	onComplete: () => void;
+  onComplete: () => void;
 };
 
 const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
-	const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setProgress((prev) => {
-				if (prev >= 100) {
-					clearInterval(interval);
-					return 100;
-				}
-				return prev + 2;
-			});
-		}, 30);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 4;
+      });
+    }, 45);
 
-		return () => clearInterval(interval);
-	}, []);
+    return () => clearInterval(interval);
+  }, []);
 
-	useEffect(() => {
-		if (progress >= 100) {
-			const timeout = setTimeout(onComplete, 500);
-			return () => clearTimeout(timeout);
-		}
-		return undefined;
-	}, [progress, onComplete]);
+  useEffect(() => {
+    if (progress >= 100) {
+      const timeout = setTimeout(onComplete, 420);
+      return () => clearTimeout(timeout);
+    }
+    return undefined;
+  }, [progress, onComplete]);
 
-	const particles = useMemo(() => Array.from({ length: 16 }, (_, index) => index), []);
+  return (
+    <motion.div
+      className="loading"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="loading__backdrop" aria-hidden="true" />
 
-	return (
-		<motion.div
-			className="loading"
-			initial={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-			transition={{ duration: 0.6 }}
-		>
-			<div className="loading__content">
-				<motion.div
-					className="loading__counter"
-					initial={{ opacity: 0, scale: 0.8 }}
-					animate={{ opacity: 1, scale: 1 }}
-					transition={{ duration: 0.8 }}
-				>
-					<span className="loading__number">{progress}</span>
-					<span className="loading__percent">%</span>
-				</motion.div>
+      <motion.div
+        className="loading__badge"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
+        <img src="/miku/miku-chibi.png" alt="Chibi Miku" />
+        <span>Miku Dayo booting</span>
+      </motion.div>
 
-				<div className="loading__bar">
-					<motion.div
-						className="loading__bar-fill"
-						animate={{ width: `${progress}%` }}
-						transition={{ duration: 0.3, ease: 'easeOut' }}
-					/>
-				</div>
+      <div className="loading__progress">
+        <motion.div
+          className="loading__meter"
+          initial={{ width: '0%' }}
+          animate={{ width: `${progress}%` }}
+          transition={{ ease: 'easeOut', duration: 0.35 }}
+        />
+        <div className="loading__labels">
+          <span>{progress}%</span>
+          <span>tuning synthesizers</span>
+        </div>
+      </div>
 
-				<motion.p
-					className="loading__tagline"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ delay: 0.4, duration: 0.8 }}
-				>
-					Preparing the experience
-				</motion.p>
-			</div>
-
-			<div className="loading__particles">
-				{particles.map((particle) => (
-					<motion.span
-						key={particle}
-						className="loading__particle"
-						initial={{ opacity: 0, scale: 0 }}
-						animate={{
-							opacity: [0, 0.7, 0],
-							scale: [0.2, 1, 0.2],
-							y: [0, -40, 0],
-						}}
-						transition={{
-							duration: 3,
-							repeat: Infinity,
-							delay: particle * 0.1,
-						}}
-					/>
-				))}
-			</div>
-		</motion.div>
-	);
+      <motion.div
+        className="loading__ring"
+        initial={{ rotate: 0 }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
+      />
+    </motion.div>
+  );
 };
 
 export default LoadingScreen;
