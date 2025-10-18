@@ -6,25 +6,19 @@ const Spotlight = () => {
     <section className="spotlight" id="spotlight">
       <div className="spotlight__glow" aria-hidden="true" />
 
-      <motion.div
-        className="spotlight__copy"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.7 }}
-      >
-        <span className="spotlight__eyebrow">Character moment</span>
-        <h2 className="spotlight__title">Miku Dayo takes center stage</h2>
+      <div className="spotlight__copy">
+        <span className="spotlight__eyebrow">Center stage</span>
+        <h2 className="spotlight__title">Meet the mascot — playful, curious, unmistakably Miku</h2>
         <p className="spotlight__text">
-          A playful tribute to the iconic mascot costume that swept fan events. Hovering between virtual and tangible, Miku Dayo is
-          the wink that keeps the fandom smiling.
+          Scroll a little and she drops by to say hello. This section keeps the layout tidy so elements never collide: image in the
+          middle, message on top, and soft glows behind.
         </p>
         <ul className="spotlight__points">
-          <li>Soft neon rim lights keep the mood dreamy and futuristic.</li>
-          <li>Layered parallax reveals subtly shifting depth as you scroll.</li>
-          <li>Each scene keeps focus on Miku—no stray overlaps, only spotlight.</li>
+          <li>Non-overlapping layers</li>
+          <li>Subtle, smooth entrance</li>
+          <li>Optimized for small page length</li>
         </ul>
-      </motion.div>
+      </div>
 
       <motion.img
         src="/miku/miku-hanging.png"
@@ -38,12 +32,14 @@ const Spotlight = () => {
 
       <motion.div
         className="spotlight__bubble"
-        initial={{ y: -80, opacity: 0 }}
-        whileInView={{ y: -12, opacity: 1 }}
-        viewport={{ once: true, amount: 0.5 }}
-        transition={{ delay: 0.4, duration: 0.6, ease: 'easeOut' }}
+        initial={{ opacity: 0, y: -12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.7 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        role="status"
+        aria-live="polite"
       >
-        <span className="spotlight__bubble-text">It&apos;s me, Mikuuu!</span>
+        <span className="spotlight__bubble-text">It's me Mikuuu ♫</span>
       </motion.div>
     </section>
   );

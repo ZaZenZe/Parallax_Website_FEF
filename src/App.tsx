@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'motion/react';
-import Hero from './components/Hero.tsx';
-import Facts from './components/Facts.tsx';
-import Spotlight from './components/Spotlight.tsx';
-import Gallery from './components/Gallery.tsx';
-import Footer from './components/Footer.tsx';
-import LoadingScreen from './components/LoadingScreen.tsx';
+import Hero from './components/Hero';
+import Facts from './components/Facts';
+import Spotlight from './components/Spotlight';
+import Gallery from './components/Gallery';
+import Footer from './components/Footer';
+import LoadingScreen from './components/LoadingScreen';
 import './App.scss';
 
 const App = () => {
