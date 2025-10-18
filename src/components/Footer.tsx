@@ -1,38 +1,30 @@
 import { motion } from 'motion/react';
+import { useFontCycle } from '../hooks/useFontCycle';
 import '../styles/Footer.scss';
 
 const Footer = () => {
+  const dynamicFont = useFontCycle({ intervalMs: 500 });
+
   return (
     <footer className="footer">
       <div className="footer__inner">
         <motion.div
-          className="footer__heading"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="footer__label">Thanks for visiting</span>
-          <h2>Miku Dayo says bye-bye~</h2>
-        </motion.div>
-
-        <motion.p
-          className="footer__note"
+          className="footer__credits"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ delay: 0.2, duration: 0.5 }}
         >
-          Keep the rhythm alive, support your favourite producers, and never stop sharing the glow-stick energy. This tiny site closes here so the focus stays on the music.
-        </motion.p>
-
-        <div className="footer__meta">
-          <span>Crafted with teal dreams · {new Date().getFullYear()}</span>
-          <div className="footer__links">
-            <a href="#home">Back to top</a>
-            <a href="#facts">Jump to facts</a>
-          </div>
-        </div>
+          <p className="footer__credits-text neon-shift" style={{ fontFamily: dynamicFont }}>
+            This website is made as a project for school purposes.
+          </p>
+          <p className="footer__credits-text neon-shift" style={{ fontFamily: dynamicFont }}>
+            Hatsune Miku is a registered trademark of Crypton Future Media, Inc.
+          </p>
+          <p className="footer__credits-signature neon-shift" style={{ fontFamily: dynamicFont }}>
+            Made by Ricky SDE
+          </p>
+        </motion.div>
       </div>
     </footer>
   );

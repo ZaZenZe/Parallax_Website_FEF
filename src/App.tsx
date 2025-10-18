@@ -3,6 +3,7 @@ import { AnimatePresence } from 'motion/react';
 import Hero from './components/Hero';
 import About from './components/About';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import ParallaxBackground from './components/ParallaxBackground';
 import './App.scss';
@@ -31,6 +32,7 @@ const App = () => {
             <About />
             <Contact />
           </main>
+          <Footer />
         </>
       )}
     </div>
