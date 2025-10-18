@@ -115,7 +115,7 @@
   }
 
   &__logo-img {
-    width: clamp(2.5rem, 4vw, 3.5rem);
+    width: clamp(3.2rem, 5vw, 5.2rem);
     height: auto;
     filter: drop-shadow(0 0 20px rgba(0, 212, 212, 0.6));
     transition: transform 0.3s ease;
@@ -125,13 +125,28 @@
     }
   }
 
-  &__logo-text {
-    font-size: clamp(1.2rem, 2vw, 1.6rem);
-    font-weight: 700;
-    color: #00d4d4;
+  &__brand {
+    font-size: clamp(1.2rem, 2.4vw, 1.8rem);
+    font-weight: 800;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    text-shadow: 0 0 10px rgba(0, 212, 212, 0.5);
+    background: linear-gradient(90deg, #2effd3, #23c6ff, #ff58d6, #2effd3);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: hueShift 8s linear infinite;
+    text-shadow: 0 0 18px rgba(35, 198, 255, 0.35);
+
+    em {
+      font-style: normal;
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes hueShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
   }
 
   &__menu {
@@ -223,12 +238,21 @@
     }
 
     strong {
-      background: linear-gradient(135deg, #00d4d4, #ff69b4);
+      background: linear-gradient(135deg, #00d4d4, #23c6ff 50%, #ff69b4);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       display: block;
     }
+
+    &-dynamic {
+      animation: titleGlow 3.2s ease-in-out infinite;
+    }
+  }
+
+  @keyframes titleGlow {
+    0%, 100% { text-shadow: 0 0 18px rgba(35, 198, 255, 0.35); }
+    50% { text-shadow: 0 0 28px rgba(255, 88, 214, 0.45); }
   }
 
   &__subtitle {

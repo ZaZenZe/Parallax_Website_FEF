@@ -23,7 +23,8 @@ const Hero = () => {
   const reverseX = useTransform(x, (value) => value * -0.35);
   const reverseY = useTransform(y, (value) => value * -0.35);
 
-  const cyclingText = useTextCycle({ intervalMs: 500 });
+  // Slower cycle for the big hero title
+  const cyclingTitle = useTextCycle({ intervalMs: 1200 });
 
   const heroRef = useRef<HTMLElement>(null);
   const filmLogoRef = useRef<HTMLDivElement>(null);
@@ -156,10 +157,10 @@ const Hero = () => {
         <div className="hero__logo-fixed" ref={fixedLogoRef}>
           <img
             src="/miku/miku-logo.svg"
-            alt="Miku Dayo logo"
+            alt="Hatsune Miku logo"
             className="hero__logo-img"
           />
-          <span className="hero__logo-text">{cyclingText}</span>
+          <span className="hero__brand" aria-label="Parallax Demo">Parallax&nbsp;<em>Demo</em></span>
         </div>
         <ul className="hero__menu">
           {navLinks.map((link) => (
@@ -181,7 +182,7 @@ const Hero = () => {
           <div className="hero__badge">Digital idol tribute</div>
           <h1 className="hero__title">
             <span>Welcome to</span>
-            <strong>Miku Dayo</strong>
+            <strong className="hero__title-dynamic">{cyclingTitle}</strong>
           </h1>
           <p className="hero__subtitle">
             A cinematic parallax experience celebrating Hatsune Miku&apos;s bubbly mascot persona. Watch layers unfold with depth, explore lore, and connect with the digital diva.
