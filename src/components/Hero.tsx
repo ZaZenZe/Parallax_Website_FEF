@@ -1,112 +1,194 @@
-import { motion, useScroll, useTransform } from 'motion/react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useTransform } from 'motion/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import useMouseParallax from '../hooks/useMouseParallax';
+import useTextCycle from '../hooks/useTextCycle';
 import '../styles/Hero.scss';
 
-const heroWords = 'CREATIVE'.split('');
-const heroOutlineWords = 'STUDIO'.split('');
+gsap.registerPlugin(ScrollTrigger);
+
+const navLinks = [
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+];
 
 const Hero = () => {
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
+  const [introComplete, setIntroComplete] = useState(false);
+  const { x, y } = useMouseParallax(28);
+  const midX = useTransform(x, (value) => value * 0.65);
+  const midY = useTransform(y, (value) => value * 0.65);
+  const reverseX = useTransform(x, (value) => value * -0.35);
+  const reverseY = useTransform(y, (value) => value * -0.35);
 
-  const translateY = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
-  const fadeOut = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
-  const shapeDrift = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
-  const mediaLeftY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const mediaRightY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
+  // Slower cycle for the big hero title
+  const cyclingTitle = useTextCycle({ intervalMs: 1200 });
+
+  const heroRef = useRef<HTMLElement>(null);
+  const filmLogoRef = useRef<HTMLDivElement>(null);
+  const filmOverlayRef = useRef<HTMLDivElement>(null);
+  const fixedLogoRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // Cinematic intro animation
+  useEffect(() => {
+    if (!filmLogoRef.current || !filmOverlayRef.current) return;
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'power2.inOut' },
+      onComplete: () => setIntroComplete(true),
+    });
+
+    // Phase 1: Logo emerges from black (0-2s)
+    tl.fromTo(
+      filmLogoRef.current,
+      { opacity: 0, scale: 0.8, z: -500 },
+      { opacity: 1, scale: 1, z: 0, duration: 2 }
+    );
+
+    // Phase 2: Dolly zoom out (2-4s)
+    tl.to(
+      filmLogoRef.current,
+      { scale: 0.6, z: -200, duration: 2 },
+      '+=0.5'
+    );
+
+    // Phase 3: Reveal main site (4-5.5s)
+    tl.to(
+      filmOverlayRef.current,
+      { opacity: 0, duration: 1.5 },
+      '-=0.5'
+    );
+
+    // Phase 4: Logo to fixed position (5.5-6.5s)
+    tl.to(
+      filmLogoRef.current,
+      {
+        scale: 0.2,
+        x: '-40vw',
+        y: '-42vh',
+        duration: 1,
+      },
+      '-=0.5'
+    );
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+  // Scroll parallax after intro
+  useEffect(() => {
+    if (!introComplete || !fixedLogoRef.current || !contentRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: 'top top',
+          end: '+=150%',
+          scrub: 1.5,
+          pin: false,
+        },
+      });
+
+      tl.to(fixedLogoRef.current, {
+        rotationY: 15,
+        z: -100,
+        ease: 'power2.out',
+      }, 0);
+
+      tl.to(contentRef.current, {
+        opacity: 0,
+        y: 100,
+        ease: 'power2.in',
+      }, 0);
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, [introComplete]);
 
   return (
-    <section className="hero" id="hero" ref={heroRef}>
-      <motion.div className="hero__background" style={{ opacity: fadeOut }} />
-
-      <motion.div className="hero__shapes" style={{ y: shapeDrift }}>
-        <img src="/assets/hero/abstract-shape.png" alt="Abstract shard" className="hero__shape hero__shape--a" />
-        <img src="/assets/hero/geometric-shapes.png" alt="Geometric pattern" className="hero__shape hero__shape--b" />
-        <img src="/assets/hero/cube-abstract-shape.png" alt="Cube" className="hero__shape hero__shape--c" />
-        <img src="/assets/hero/spiral.png" alt="Spiral" className="hero__shape hero__shape--d" />
-      </motion.div>
-
-      <motion.div className="hero__content" style={{ y: translateY, opacity: fadeOut }}>
-        <div className="hero__heading">
-          <motion.h1
-            className="hero__title"
-            initial={{ opacity: 0, y: 80 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.17, 0.67, 0.12, 0.82] }}
-          >
-            <span className="hero__word">
-              {heroWords.map((letter, index) => (
-                <motion.span
-                  key={letter + index}
-                  className="hero__letter"
-                  initial={{ opacity: 0, y: 80 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: index * 0.08 }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </span>
-
-            <span className="hero__word hero__word--outline">
-              {heroOutlineWords.map((letter, index) => (
-                <motion.span
-                  key={letter + index}
-                  className="hero__letter hero__letter--outline"
-                  initial={{ opacity: 0, y: 80 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, delay: 0.6 + index * 0.08 }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </span>
-          </motion.h1>
-
-          <motion.p
-            className="hero__subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.6 }}
-          >
-            Immersive digital experiences blending art, design, and technology.
-          </motion.p>
+    <section className="hero" id="home" ref={heroRef}>
+      {/* Film intro overlay */}
+      <div className="hero__film-overlay" ref={filmOverlayRef}>
+        <div className="hero__film-logo" ref={filmLogoRef}>
+          <h1 className="hero__film-title">初音ミク</h1>
+          <p className="hero__film-subtitle">Hatsune Miku</p>
         </div>
+      </div>
 
-        <div className="hero__media">
-          <motion.img
-            src="/assets/hero/works_3d_model_01.png"
-            alt="Floating sculpture"
-            className="hero__media-item hero__media-item--left"
-            initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
-            animate={{ opacity: 0.75, scale: 1, rotate: 360 }}
-            transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
-            style={{ y: mediaLeftY }}
+      {/* Fixed logo (top-left after intro) */}
+      <nav className="hero__nav">
+        <div className="hero__logo-fixed" ref={fixedLogoRef}>
+          <img
+            src="/miku/miku-logo.svg"
+            alt="Hatsune Miku logo"
+            className="hero__logo-img"
           />
-          <motion.img
-            src="/assets/hero/works_3d_model_02.png"
-            alt="Floating sculpture"
-            className="hero__media-item hero__media-item--right"
-            initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
-            animate={{ opacity: 0.75, scale: 1, rotate: -360 }}
-            transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
-            style={{ y: mediaRightY }}
-          />
+          <span className="hero__brand" aria-label="Parallax Demo">Parallax&nbsp;<em>Demo</em></span>
         </div>
-      </motion.div>
+        <ul className="hero__menu">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-      <motion.div
-        className="hero__scroll"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
-      >
-        <span className="hero__scroll-text">SCROLL</span>
-        <span className="hero__scroll-line" />
-      </motion.div>
+      {/* Main content */}
+      <div className="hero__content" ref={contentRef}>
+        <motion.div
+          className="hero__intro"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: introComplete ? 1 : 0, y: introComplete ? 0 : 60 }}
+          transition={{ duration: 0.8, ease: [0.17, 0.67, 0.12, 0.92] }}
+        >
+          <div className="hero__badge">Digital idol tribute</div>
+          <h1 className="hero__title">
+            <span>Welcome to</span>
+            <strong className="hero__title-dynamic">{cyclingTitle}</strong>
+          </h1>
+          <p className="hero__subtitle">
+            A cinematic parallax experience celebrating Hatsune Miku&apos;s bubbly mascot persona. Watch layers unfold with depth, explore lore, and connect with the digital diva.
+          </p>
+          <div className="hero__cta">
+            <a href="#about" className="hero__btn hero__btn--primary">Discover More</a>
+            <a href="#contact" className="hero__btn hero__btn--ghost">Get in Touch</a>
+          </div>
+        </motion.div>
+
+        <motion.img
+          src="/miku/miku-full-art.png"
+          alt="Illustration of Hatsune Miku"
+          className="hero__character"
+          initial={{ opacity: 0, scale: 0.9, y: 40 }}
+          animate={{ 
+            opacity: introComplete ? 1 : 0, 
+            scale: introComplete ? 1 : 0.9, 
+            y: introComplete ? 0 : 40 
+          }}
+          transition={{ delay: 0.4, duration: 0.8, ease: 'easeOut' }}
+          style={{ x: midX, y: midY }}
+        />
+      </div>
+
+      <motion.img
+        src="/miku/miku-silhouette.png"
+        alt="Silhouetted Miku"
+        className="hero__accent"
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: introComplete ? 0.55 : 0, y: introComplete ? 0 : 40 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+        style={{ x: reverseX, y: reverseY }}
+      />
+
+      <div className="hero__scroll">
+        <div className="hero__scroll-track">
+          <span>scroll down • scroll down • scroll down • scroll down • </span>
+        </div>
+      </div>
     </section>
   );
 };

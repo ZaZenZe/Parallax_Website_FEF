@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;900&family=Oswald:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 * {
   margin: 0;
@@ -8,15 +8,28 @@
 
 :root {
   font-size: 62.5%;
+  --miku-night: #03060f;
+  --miku-deep: #06142c;
+  --miku-foreground: #e6f7ff;
+  --miku-muted: rgba(230, 247, 255, 0.64);
+  --miku-teal: #2effd3;
+  --miku-blue: #23c6ff;
+  --miku-pink: #ff58d6;
+  --miku-border: rgba(46, 255, 211, 0.2);
+  color-scheme: dark;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: 1.6rem;
   line-height: 1.6;
-  color: #ffffff;
-  background: #0b0b0b;
+  color: var(--miku-foreground);
+  background: radial-gradient(circle at 15% 15%, rgba(35, 198, 255, 0.12), transparent 55%),
+    radial-gradient(circle at 80% 5%, rgba(255, 88, 214, 0.08), transparent 45%),
+    var(--miku-night);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 a {
@@ -46,10 +59,10 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: #161616;
+  background: rgba(4, 8, 20, 0.85);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #f122f9 0%, #df19e7 100%);
+  background: linear-gradient(180deg, var(--miku-teal) 0%, var(--miku-pink) 100%);
   border-radius: 1rem;
 }

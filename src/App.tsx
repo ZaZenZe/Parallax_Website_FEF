@@ -1,40 +1,36 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'motion/react';
-import Header from './components/Header.tsx';
-import Hero from './components/Hero.tsx';
-import About from './components/About.tsx';
-import Works from './components/Works.tsx';
-import Gallery from './components/Gallery.tsx';
-import Footer from './components/Footer.tsx';
-import LoadingScreen from './components/LoadingScreen.tsx';
+import Hero from './components/Hero';
+import About from './components/About';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import LoadingScreen from './components/LoadingScreen';
+import ParallaxBackground from './components/ParallaxBackground';
 import './App.scss';
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timeout = setTimeout(() => setIsLoading(false), 4000);
+    const timeout = setTimeout(() => setIsLoading(false), 2800);
     return () => clearTimeout(timeout);
   }, []);
-
-  const handleLoadingComplete = () => setIsLoading(false);
 
   return (
     <div className="app">
       <AnimatePresence mode="wait">
         {isLoading && (
-          <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
+          <LoadingScreen key="loading" onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
 
       {!isLoading && (
         <>
-          <Header />
+          <ParallaxBackground />
+          <Hero />
           <main className="app__main">
-            <Hero />
             <About />
-            <Works />
-            <Gallery />
+            <Contact />
           </main>
           <Footer />
         </>

@@ -1,76 +1,30 @@
 import { motion } from 'motion/react';
+import { useFontCycle } from '../hooks/useFontCycle';
 import '../styles/Footer.scss';
 
 const Footer = () => {
+  const dynamicFont = useFontCycle({ intervalMs: 500 });
+
   return (
-    <footer className="footer" id="contact">
-      <div className="footer__container">
+    <footer className="footer">
+      <div className="footer__inner">
         <motion.div
-          className="footer__heading"
-          initial={{ opacity: 0, y: 40 }}
+          className="footer__credits"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
         >
-          <h2>Let us craft your next big idea.</h2>
-          <a href="mailto:hello@creativestudio.com">hello@creativestudio.com</a>
+          <p className="footer__credits-text neon-shift" style={{ fontFamily: dynamicFont }}>
+            This website is made as a project for school purposes.
+          </p>
+          <p className="footer__credits-text neon-shift" style={{ fontFamily: dynamicFont }}>
+            Hatsune Miku is a registered trademark of Crypton Future Media, Inc.
+          </p>
+          <p className="footer__credits-signature neon-shift" style={{ fontFamily: dynamicFont }}>
+            Made by Ricky SDE
+          </p>
         </motion.div>
-
-        <div className="footer__grid">
-          <motion.div
-            className="footer__column"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.6 }}
-          >
-            <h3>Visit</h3>
-            <p>
-              99 Parallax Avenue
-              <br />
-              Paris, France
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="footer__column"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-          >
-            <h3>Follow</h3>
-            <ul>
-              <li><a href="#">Instagram</a></li>
-              <li><a href="#">Behance</a></li>
-              <li><a href="#">Dribbble</a></li>
-            </ul>
-          </motion.div>
-
-          <motion.div
-            className="footer__column"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            <h3>Navigate</h3>
-            <ul>
-              <li><a href="#hero">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#works">Works</a></li>
-              <li><a href="#gallery">Gallery</a></li>
-            </ul>
-          </motion.div>
-        </div>
-
-        <div className="footer__meta">
-          <span>© {new Date().getFullYear()} Creative Studio. All rights reserved.</span>
-          <div className="footer__badges">
-            <span className="footer__badge footer__badge--magenta" />
-            <span className="footer__badge footer__badge--cyan" />
-          </div>
-        </div>
       </div>
     </footer>
   );

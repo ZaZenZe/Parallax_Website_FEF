@@ -1,95 +1,95 @@
 import { motion } from 'motion/react';
 import '../styles/About.scss';
 
-const stats = [
-  { label: 'Projects', value: '15+' },
-  { label: 'Years', value: '5+' },
-  { label: 'Concepts', value: '100+' },
+type Fact = {
+  id: string;
+  title: string;
+  highlight: string;
+  description: string;
+};
+
+const facts: Fact[] = [
+  {
+    id: '01',
+    title: 'Vocaloid Pioneer',
+    highlight: '2007 debut',
+    description:
+      'Hatsune Miku launched as a voicebank in 2007 and quickly became the face of the Vocaloid movement, inspiring a global wave of fan music.',
+  },
+  {
+    id: '02',
+    title: 'Crowd-Sourced Star',
+    highlight: '10k+ producers',
+    description:
+      'Thousands of creators contribute songs, illustrations, and stories. Miku exists because a passionate community keeps imagining new performances for her.',
+  },
+  {
+    id: '03',
+    title: 'Live In Hologram',
+    highlight: 'World tours',
+    description:
+      'From Tokyo to Los Angeles, Miku has taken the stage as a holographic performer, complete with bandmates, choreography, and cheering glow-stick seas.',
+  },
+  {
+    id: '04',
+    title: 'Name With Meaning',
+    highlight: 'Future sound',
+    description:
+      '"Hatsune" means first sound and "Miku" hints at the future, a promise that new voices and ideas will keep emerging from her digital persona.',
+  },
 ];
 
 const About = () => {
   return (
     <section className="about" id="about">
-      <div className="about__container">
-        <div className="about__media">
-          <motion.img
-            src="/assets/hero/abstract-glass-shape.png"
-            alt="Abstract glass"
-            className="about__shape about__shape--primary"
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          />
-          <motion.img
-            src="/assets/hero/world.png"
-            alt="World icon"
-            className="about__shape about__shape--secondary"
-            initial={{ y: -40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          />
-          <motion.img
-            src="/assets/hero/thinking.png"
-            alt="Thinking icon"
-            className="about__shape about__shape--accent"
-            initial={{ y: 40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          />
-        </div>
+      <motion.div
+        className="about__intro"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: 0.7 }}
+      >
+        <span className="about__eyebrow">Lore fragments</span>
+        <h2 className="about__title">
+          Snapshots from the <span>world of Miku Dayo</span>
+        </h2>
+        <p className="about__text">
+          A brief stroll through the highlights—community-powered music, holographic stages, and the future-forward spirit that defines Hatsune Miku.
+        </p>
+      </motion.div>
 
-        <div className="about__content">
-          <motion.span
-            className="about__eyebrow"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+      <div className="about__grid">
+        {facts.map((fact, index) => (
+          <motion.article
+            key={fact.id}
+            className="about__card"
+            initial={{ opacity: 0, y: 40, rotateX: -10 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ delay: index * 0.1, duration: 0.6 }}
           >
-            About the studio
-          </motion.span>
-
-          <motion.h2
-            className="about__title"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1, duration: 0.7 }}
-          >
-            We craft immersive digital stories with bold motion and thoughtful detail.
-          </motion.h2>
-
-          <motion.p
-            className="about__description"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2, duration: 0.7 }}
-          >
-            From interactive installations to narrative-driven product launches, our multidisciplinary team explores the borders of design, technology, and art direction. Every concept is tuned for emotional impact and lasting impressions.
-          </motion.p>
-
-          <motion.div
-            className="about__stats"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.7 }}
-          >
-            {stats.map(({ label, value }) => (
-              <div key={label} className="about__stat">
-                <span className="about__stat-value">{value}</span>
-                <span className="about__stat-label">{label}</span>
-              </div>
-            ))}
-          </motion.div>
-        </div>
+            <header className="about__card-header">
+              <span className="about__badge">{fact.id}</span>
+              <span className="about__highlight">{fact.highlight}</span>
+            </header>
+            <h3 className="about__card-title">{fact.title}</h3>
+            <p className="about__card-text">{fact.description}</p>
+          </motion.article>
+        ))}
       </div>
+
+      <motion.img
+        src="/miku/miku-peeking.png"
+        alt="Chibi Miku peeking"
+        className="about__mascot"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      />
     </section>
   );
 };
 
 export default About;
+

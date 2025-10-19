@@ -1,13 +1,31 @@
 .app {
+  position: relative;
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
-  background: #0b0b0b;
-  color: #ffffff;
-  font-family: 'Montserrat', sans-serif;
+  color: var(--miku-foreground);
+  background:
+    radial-gradient(circle at 15% 15%, rgba(46, 188, 255, 0.18), transparent 50%),
+    radial-gradient(circle at 85% 85%, rgba(198, 86, 255, 0.16), transparent 55%),
+    linear-gradient(180deg, #04070f 0%, #050912 40%, #04070f 100%);
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"%3E%3Crect width="1" height="1" fill="rgba(255,255,255,0.05)"/%3E%3C/svg%3E');
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  z-index: 0;
 }
 
 .app__main {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6rem, 10vw, 12rem);
+  padding: 0 clamp(2.4rem, 8vw, 10rem) clamp(6rem, 9vw, 12rem);
 }
