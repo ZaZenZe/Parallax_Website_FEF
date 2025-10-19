@@ -1,8 +1,8 @@
 # Miku Dayo - Parallax Showcase (React + TypeScript)
 ### - Made by Sayan "Ricky" DE
-- This project was built for the Front-End Framework lecture at our University.
+- This project has been deployed on : https://parallax-miku-rsde.onrender.com
 
-A modern, interactive parallax portfolio website featuring Hatsune Miku with multi-layered scrolling backgrounds, dynamic animations, and smooth transitions. Built with React, TypeScript, and GSAP for high-performance animations.
+This project was built for the Front-End Framework lecture at our University. It's a modern, interactive parallax portfolio website featuring Hatsune Miku with multi-layered scrolling backgrounds, dynamic animations, and smooth transitions. Built with React, TypeScript, and GSAP for high-performance animations.
 
 ## 🎨 Design Philosophy
 
