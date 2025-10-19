@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../styles/ParallaxBackground.scss';
@@ -10,6 +10,45 @@ const ParallaxBackground = () => {
   const layer1Ref = useRef<HTMLDivElement>(null);
   const layer2Ref = useRef<HTMLDivElement>(null);
   const layer3Ref = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  // Mouse parallax effect for depth
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Apply mouse parallax
+  useEffect(() => {
+    if (!layer1Ref.current || !layer2Ref.current || !layer3Ref.current) return;
+
+    gsap.to(layer1Ref.current, {
+      x: mousePos.x * 15,
+      y: mousePos.y * 15,
+      duration: 1.2,
+      ease: 'power2.out',
+    });
+
+    gsap.to(layer2Ref.current, {
+      x: mousePos.x * 25,
+      y: mousePos.y * 25,
+      duration: 1.4,
+      ease: 'power2.out',
+    });
+
+    gsap.to(layer3Ref.current, {
+      x: mousePos.x * 35,
+      y: mousePos.y * 35,
+      duration: 1.6,
+      ease: 'power2.out',
+    });
+  }, [mousePos]);
 
   useEffect(() => {
     if (!bgContainerRef.current || !layer1Ref.current || !layer2Ref.current || !layer3Ref.current) return;
